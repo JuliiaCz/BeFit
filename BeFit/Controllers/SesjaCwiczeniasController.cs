@@ -22,7 +22,7 @@ namespace BeFit.Controllers
         // GET: SesjaCwiczenias
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.SesjaCwiczenia.Include(s => s.Cwiczenie).Include(s => s.Sesja);
+            var applicationDbContext = _context.SesjeCwiczenia.Include(s => s.Cwiczenie).Include(s => s.Sesja);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var sesjaCwiczenia = await _context.SesjaCwiczenia
+            var sesjaCwiczenia = await _context.SesjeCwiczenia
                 .Include(s => s.Cwiczenie)
                 .Include(s => s.Sesja)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -50,7 +50,7 @@ namespace BeFit.Controllers
         public IActionResult Create()
         {
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name");
-            ViewData["SesjaId"] = new SelectList(_context.Sesja, "Id", "name");
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace BeFit.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesja, "Id", "name", sesjaCwiczenia.SesjaId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -80,13 +80,13 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var sesjaCwiczenia = await _context.SesjaCwiczenia.FindAsync(id);
+            var sesjaCwiczenia = await _context.SesjeCwiczenia.FindAsync(id);
             if (sesjaCwiczenia == null)
             {
                 return NotFound();
             }
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesja, "Id", "name", sesjaCwiczenia.SesjaId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -123,7 +123,7 @@ namespace BeFit.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesja, "Id", "name", sesjaCwiczenia.SesjaId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -135,7 +135,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var sesjaCwiczenia = await _context.SesjaCwiczenia
+            var sesjaCwiczenia = await _context.SesjeCwiczenia
                 .Include(s => s.Cwiczenie)
                 .Include(s => s.Sesja)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -152,10 +152,10 @@ namespace BeFit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sesjaCwiczenia = await _context.SesjaCwiczenia.FindAsync(id);
+            var sesjaCwiczenia = await _context.SesjeCwiczenia.FindAsync(id);
             if (sesjaCwiczenia != null)
             {
-                _context.SesjaCwiczenia.Remove(sesjaCwiczenia);
+                _context.SesjeCwiczenia.Remove(sesjaCwiczenia);
             }
 
             await _context.SaveChangesAsync();
@@ -164,7 +164,7 @@ namespace BeFit.Controllers
 
         private bool SesjaCwiczeniaExists(int id)
         {
-            return _context.SesjaCwiczenia.Any(e => e.Id == id);
+            return _context.SesjeCwiczenia.Any(e => e.Id == id);
         }
     }
 }

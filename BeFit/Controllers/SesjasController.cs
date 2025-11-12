@@ -22,7 +22,7 @@ namespace BeFit.Controllers
         // GET: Sesjas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Sesja.ToListAsync());
+            return View(await _context.Sesje.ToListAsync());
         }
 
         // GET: Sesjas/Details/5
@@ -33,7 +33,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var sesja = await _context.Sesja
+            var sesja = await _context.Sesje
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sesja == null)
             {
@@ -73,7 +73,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var sesja = await _context.Sesja.FindAsync(id);
+            var sesja = await _context.Sesje.FindAsync(id);
             if (sesja == null)
             {
                 return NotFound();
@@ -124,7 +124,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
 
-            var sesja = await _context.Sesja
+            var sesja = await _context.Sesje
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sesja == null)
             {
@@ -139,10 +139,10 @@ namespace BeFit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var sesja = await _context.Sesja.FindAsync(id);
+            var sesja = await _context.Sesje.FindAsync(id);
             if (sesja != null)
             {
-                _context.Sesja.Remove(sesja);
+                _context.Sesje.Remove(sesja);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +151,7 @@ namespace BeFit.Controllers
 
         private bool SesjaExists(int id)
         {
-            return _context.Sesja.Any(e => e.Id == id);
+            return _context.Sesje.Any(e => e.Id == id);
         }
     }
 }
