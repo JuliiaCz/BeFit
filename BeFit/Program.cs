@@ -2,7 +2,6 @@ using BeFit.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace BeFit

@@ -49,8 +49,8 @@ namespace BeFit.Controllers
         // GET: SesjaCwiczenias/Create
         public IActionResult Create()
         {
-            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name");
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name");
+            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name");
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace BeFit.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name", sesjaCwiczenia.SesjaId);
+            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name", sesjaCwiczenia.CwiczenieId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -85,8 +85,8 @@ namespace BeFit.Controllers
             {
                 return NotFound();
             }
-            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name", sesjaCwiczenia.SesjaId);
+            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name", sesjaCwiczenia.CwiczenieId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -122,8 +122,8 @@ namespace BeFit.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "name", sesjaCwiczenia.SesjaId);
+            ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name", sesjaCwiczenia.CwiczenieId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
