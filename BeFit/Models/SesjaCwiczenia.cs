@@ -41,7 +41,7 @@ namespace BeFit.Models
 
 
         [Display(Name = "Stworzone przez")]
-        public string CreatedById { get; set; } = string.Empty;
+        public string StworzonePrzez { get; set; } = string.Empty;
         [Display(Name = "Stworzone przez")]
         public virtual Uzytkownik? CreatedBy { get; set; }
 
