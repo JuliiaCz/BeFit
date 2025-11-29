@@ -1,42 +1,12 @@
-﻿@model IEnumerable<dynamic>
-
-@{
-    ViewData["Title"] = "Statystyki ćwiczeń – ostatnie 4 tygodnie";
+﻿@{
+    ViewData["Title"] = "Home Page";
 }
 
-<h2 class="mb-3">@ViewData["Title"]</h2>
-
-<p class="has-text-right">
-    <a asp-controller="SesjaCwiczenies" asp-action="Create" class="button is-link">Create New</a>
-</p>
-
-<table class="table table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Ćwiczenie</th>
-            <th>Ile razy wykonywane</th>
-            <th>Łącznie powtórzeń</th>
-            <th>Średnie obciążenie [kg]</th>
-            <th>Maksymalne obciążenie [kg]</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model == null || !Model.Any())
-        {
-            <tr><td colspan="5" class="text-center">Brak danych w ostatnich 4 tygodniach.</td></tr>
-        }
-        else
-        {
-            @foreach (var r in Model)
-            {
-                <tr>
-                    <td>@r.Nazwa</td>
-                    <td>@r.IleRazyWykonywane</td>
-                    <td>@r.LaczniePowtorzen</td>
-                    <td>@(((double)r.SrednieObciazenieKg).ToString("0.##"))</td>
-                    <td>@(((double)r.MaksymalneObciazenieKg).ToString("0.##"))</td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>
+        BeFit to prosta aplikacja do śledzenia treningów i monitorowania progresu.
+        Dodawaj swoje ćwiczenia, zapisuj sesje i obserwuj, jak rośnie Twoja siła z tygodnia na tydzień.
+        Aplikacja powstała w celu nauczania korzystania z ASP.NET Core
+        Learn about it <a href="https://learn.microsoft.com/aspnet/core">.
+</div>

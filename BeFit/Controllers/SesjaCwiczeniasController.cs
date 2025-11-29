@@ -50,7 +50,7 @@ namespace BeFit.Controllers
         public IActionResult Create()
         {
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name");
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name");
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Start");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace BeFit.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name", sesjaCwiczenia.SesjaId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Start", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -86,7 +86,7 @@ namespace BeFit.Controllers
                 return NotFound();
             }
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name", sesjaCwiczenia.SesjaId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Start", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
@@ -123,7 +123,7 @@ namespace BeFit.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CwiczenieId"] = new SelectList(_context.Cwiczenie, "Id", "Name", sesjaCwiczenia.CwiczenieId);
-            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Name", sesjaCwiczenia.SesjaId);
+            ViewData["SesjaId"] = new SelectList(_context.Sesje, "Id", "Start", sesjaCwiczenia.SesjaId);
             return View(sesjaCwiczenia);
         }
 
