@@ -10,12 +10,12 @@ namespace BeFit
 {
     public class Program
     {
-        // UWAGA: async Task Main, ¿eby mo¿na by³o u¿ywaæ await
+        
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Ustawienie kultury na invariant
+            
             var cultureInfo = CultureInfo.InvariantCulture;
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
@@ -29,20 +29,19 @@ namespace BeFit
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // Identity z naszym Uzytkownik + role
+            //Uzytkownik + role
             builder.Services
                 .AddDefaultIdentity<Uzytkownik>(options =>
                 {
                     options.SignIn.RequireConfirmedAccount = false;
                 })
-                .AddRoles<IdentityRole>() // <<< ROLE
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            // ---------- SEED RÓL I KONTA ADMINA ----------
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -50,7 +49,6 @@ namespace BeFit
                 var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                 var userManager = services.GetRequiredService<UserManager<Uzytkownik>>();
 
-                // Role, które chcemy mieæ
                 string[] roles = { "Admin", "User" };
 
                 foreach (var role in roles)
@@ -61,7 +59,6 @@ namespace BeFit
                     }
                 }
 
-                // Konto admina
                 string adminEmail = "admin@befit.pl";
                 string adminPassword = "Admin!123";
 
@@ -85,9 +82,7 @@ namespace BeFit
                     
                 }
             }
-            // ---------- KONIEC SEEDU ----------
-
-            // Pipeline HTTP
+            
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -111,7 +106,7 @@ namespace BeFit
 
             app.UseRouting();
 
-            app.UseAuthentication();   // <<< wa¿ne przy Identity
+            app.UseAuthentication();   
             app.UseAuthorization();
 
             app.MapControllerRoute(

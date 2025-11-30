@@ -17,18 +17,18 @@ namespace BeFit.Data
         {
             base.OnModelCreating(builder);
 
-            // (opcjonalnie) indeks/unikalność nazwy ćwiczenia
+            
             builder.Entity<Cwiczenie>()
                    .HasIndex(e => e.Name);
 
-            // relacje SesjaCwiczenie -> Sesja (wiele zapisów w jednej sesji)
+            
             builder.Entity<SesjaCwiczenia>()
                    .HasOne(sc => sc.Sesja)
-                   .WithMany()                 // możesz dodać w Sesja: public List<SesjaCwiczenie> Pozycje { get; set; } = new();
+                   .WithMany()                 
                    .HasForeignKey(sc => sc.SesjaId)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            // relacje SesjaCwiczenie -> Cwiczenia (konkretny typ ćwiczenia)
+            
             builder.Entity<SesjaCwiczenia>()
                    .HasOne(sc => sc.Cwiczenie)
                    .WithMany()

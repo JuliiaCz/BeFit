@@ -78,7 +78,7 @@ namespace BeFit.Controllers
         {
             var userId = GetUserId();
 
-            // upewniamy się, że wybrana sesja należy do zalogowanego użytkownika
+            
             bool sesjaOk = await _context.Sesje
                 .AnyAsync(s => s.Id == model.SesjaId && s.StworzonePrzez == userId);
 
@@ -110,7 +110,7 @@ namespace BeFit.Controllers
                 "Id", "Start",
                 model.SesjaId);
 
-            // Widok wciąż ma model SesjaCwiczenia, więc składamy obiekt tymczasowy
+            
             var viewModel = new SesjaCwiczenia
             {
                 SesjaId = model.SesjaId,

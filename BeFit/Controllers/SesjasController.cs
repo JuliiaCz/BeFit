@@ -77,7 +77,7 @@ namespace BeFit.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // jeśli walidacja padnie, odtwarzamy dane do modelu Sesja dla widoku
+            
             var viewModel = new Sesja
             {
                 Start = model.Start,

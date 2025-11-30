@@ -28,17 +28,17 @@ namespace BeFit.Controllers
             var userId = GetUserId();
             DateTime fromDate = DateTime.Now.AddDays(-28);
 
-            // 1. Pobieramy tylko treningi zalogowanego użytkownika z ostatnich 28 dni
+            
             var query = _context.SesjeCwiczenia
                 .Include(e => e.Sesja)
                 .Include(e => e.Cwiczenie)
                 .Where(e => e.Sesja.Start >= fromDate)
                 .Where(e => e.StworzonePrzez == userId);
 
-            // 2. Pobieramy dane z bazy
+            
             var sesje = await query.ToListAsync();
 
-            // 3. Grupujemy w pamięci po nazwie ćwiczenia i liczymy statystyki
+            
             var stats = sesje
                 .GroupBy(e => e.Cwiczenie.Name)
                 .Select(g => new Statystyki

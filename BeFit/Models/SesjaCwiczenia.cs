@@ -10,7 +10,6 @@ namespace BeFit.Models
     {
         public int Id { get; set; }
 
-        // FK do Sesji treningowej
         [Required]
         [Display(Name = "Sesja treningowa")]
         public int SesjaId { get; set; }
@@ -18,7 +17,6 @@ namespace BeFit.Models
         [Display(Name = "Sesja treningowa")]
         public virtual Sesja? Sesja { get; set; }
 
-        // FK do typu ćwiczenia
         [Required]
         [Display(Name = "Ćwiczenie")]
         public int CwiczenieId { get; set; }
@@ -26,7 +24,6 @@ namespace BeFit.Models
         [Display(Name = "Ćwiczenie")]
         public virtual Cwiczenie? Cwiczenie { get; set; }
 
-        // Parametry wykonania
         [Range(0, 1000, ErrorMessage = "Ciężar musi być w przedziale 0–1000 kg.")]
         [Display(Name = "Ciężar [kg]")]
         public decimal CiezarKg { get; set; }
