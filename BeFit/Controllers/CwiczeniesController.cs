@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BeFit.Data;
+using BeFit.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using BeFit.Data;
-using BeFit.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BeFit.Controllers
 {
+    
     public class CwiczeniesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -44,6 +46,8 @@ namespace BeFit.Controllers
         }
 
         // GET: Cwiczenies/Create
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Create()
         {
             return View();
@@ -52,6 +56,8 @@ namespace BeFit.Controllers
         // POST: Cwiczenies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] Cwiczenie cwiczenie)
@@ -66,6 +72,8 @@ namespace BeFit.Controllers
         }
 
         // GET: Cwiczenies/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,6 +92,8 @@ namespace BeFit.Controllers
         // POST: Cwiczenies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Cwiczenie cwiczenie)
@@ -117,6 +127,8 @@ namespace BeFit.Controllers
         }
 
         // GET: Cwiczenies/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,6 +147,8 @@ namespace BeFit.Controllers
         }
 
         // POST: Cwiczenies/Delete/5
+        [Authorize(Roles = "Admin")]
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

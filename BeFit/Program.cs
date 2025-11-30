@@ -4,21 +4,23 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Threading.Tasks;
 
 namespace BeFit
 {
     public class Program
     {
-        public static void Main(string[] args)
+        // UWAGA: async Task Main, ¿eby mo¿na by³o u¿ywaæ await
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Set culture to invariant.
+            // Ustawienie kultury na invariant
             var cultureInfo = CultureInfo.InvariantCulture;
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-            // Add services to the container.
+            // Po³¹czenie z baz¹
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
@@ -27,18 +29,65 @@ namespace BeFit
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            // >>> TU ZMIANA: u¿ywamy Uzytkownik zamiast IdentityUser
-            builder.Services.AddDefaultIdentity<Uzytkownik>(options =>
-            {
-                options.SignIn.RequireConfirmedAccount = false;
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>();
+            // Identity z naszym Uzytkownik + role
+            builder.Services
+                .AddDefaultIdentity<Uzytkownik>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                })
+                .AddRoles<IdentityRole>() // <<< ROLE
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // ---------- SEED RÓL I KONTA ADMINA ----------
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+                var userManager = services.GetRequiredService<UserManager<Uzytkownik>>();
+
+                // Role, które chcemy mieæ
+                string[] roles = { "Admin", "User" };
+
+                foreach (var role in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(role))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(role));
+                    }
+                }
+
+                // Konto admina
+                string adminEmail = "admin@befit.pl";
+                string adminPassword = "Admin!123";
+
+                var admin = await userManager.FindByEmailAsync(adminEmail);
+
+                if (admin == null)
+                {
+                    admin = new Uzytkownik
+                    {
+                        UserName = adminEmail,
+                        Email = adminEmail,
+                        EmailConfirmed = true
+                    };
+
+                    var result = await userManager.CreateAsync(admin, adminPassword);
+
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(admin, "Admin");
+                    }
+                    
+                }
+            }
+            // ---------- KONIEC SEEDU ----------
+
+            // Pipeline HTTP
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
@@ -49,12 +98,10 @@ namespace BeFit
                 app.UseHsts();
             }
 
-            // Use special middleware to set localization as invariant.
             var localizationOptions = new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture(cultureInfo),
                 SupportedCultures = new List<CultureInfo> { cultureInfo },
-                //SupportedUICultures = new List<CultureInfo> { cultureInfo }
             };
 
             app.UseRequestLocalization(localizationOptions);
@@ -64,8 +111,7 @@ namespace BeFit
 
             app.UseRouting();
 
-            // >>> DODAJ TO
-            app.UseAuthentication();
+            app.UseAuthentication();   // <<< wa¿ne przy Identity
             app.UseAuthorization();
 
             app.MapControllerRoute(
